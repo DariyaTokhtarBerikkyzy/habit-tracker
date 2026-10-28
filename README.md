@@ -6,7 +6,7 @@
 
 | Участник | Роли |
 |---|---|
-| [DariyaTokhtarBerikkyzy](https://github.com/DariyaTokhtarBerikkyzy) | Тимлид, аналитик, backend, frontend, тестировщик, DevOps (проект выполнен одним участником) |
+| Дария Тохтар ([GitHub](https://github.com/DariyaTokhtarBerikkyzy)) | Тимлид, аналитик, backend, frontend, тестировщик, DevOps (проект выполнен одним участником) |
 
 Подробное распределение работы — в [docs/process.md](docs/process.md).
 
