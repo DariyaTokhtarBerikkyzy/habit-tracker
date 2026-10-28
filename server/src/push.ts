@@ -51,7 +51,7 @@ export function localNow(tz: string, at = new Date()): { date: string; time: str
 const minutes = (hhmm: string) => Number(hhmm.slice(0, 2)) * 60 + Number(hhmm.slice(3));
 
 /** Раз в минуту шлёт напоминание о невыполненных привычках; окно 60 минут переживает кратковременный простой сервера. */
-export async function runReminders(): Promise<void> {
+export async function runReminders(now = new Date()): Promise<void> {
   const rows = db
     .prepare(
       `SELECT h.*, u.tz FROM habits h JOIN users u ON u.id = h.user_id
@@ -61,7 +61,7 @@ export async function runReminders(): Promise<void> {
     .all() as unknown as (HabitRow & { tz: string })[];
 
   for (const h of rows) {
-    const { date, time } = localNow(h.tz);
+    const { date, time } = localNow(h.tz, now);
     const late = minutes(time) - minutes(h.reminder_time!);
     if (late < 0 || late >= 60) continue;
     if (!isScheduled(scheduleOf(h), date)) continue;

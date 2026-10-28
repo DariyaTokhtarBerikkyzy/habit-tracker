@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:3001"
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    volumes:
+      - habit-data:/data
+    restart: unless-stopped
+
+volumes:
+  habit-data:
