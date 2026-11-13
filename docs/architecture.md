@@ -27,6 +27,7 @@ flowchart LR
     Sched -- "Web Push (VAPID)" --> PushSvc
     PushSvc --> SW
     SW -- "показ уведомления" --> UI
+    SW -. "кэш оболочки: работа без сети" .- UI
 ```
 
 **Взаимодействие.**
@@ -134,7 +135,7 @@ erDiagram
 ```
 habit-tracker/
 ├── client/                    # Клиент (React + TypeScript + Vite)
-│   ├── public/                # Статика: sw.js (Service Worker), иконка
+│   ├── public/                # Статика: sw.js (Service Worker), manifest.webmanifest, иконки
 │   └── src/
 │       ├── api.ts             # Типы и функции запросов к API, хранение токена
 │       ├── push.ts            # Подписка на Web Push
@@ -155,7 +156,8 @@ habit-tracker/
 │       ├── dates.ts           # Работа с датами YYYY-MM-DD
 │       ├── seed.ts            # Демо-пользователь
 │       ├── streak.test.ts     # Тесты серий
-│       └── api.test.ts        # Тесты API
+│       ├── api.test.ts        # Тесты API
+│       └── pwa.test.ts        # Тесты манифеста и Service Worker
 ├── docs/                      # Документация и скриншоты
 ├── Dockerfile                 # Сборка клиента и запуск сервера
 ├── docker-compose.yml         # Сервис app, порт 8080, том данных

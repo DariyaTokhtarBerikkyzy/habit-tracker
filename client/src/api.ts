@@ -75,11 +75,16 @@ export class ApiError extends Error {}
 
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const token = getToken();
-  const res = await fetch(`/api${path}`, {
-    method,
-    headers: { 'content-type': 'application/json', ...(token ? { authorization: `Bearer ${token}` } : {}) },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  let res: Response;
+  try {
+    res = await fetch(`/api${path}`, {
+      method,
+      headers: { 'content-type': 'application/json', ...(token ? { authorization: `Bearer ${token}` } : {}) },
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+  } catch {
+    throw new ApiError('Нет соединения с сервером. Проверь интернет и попробуй ещё раз');
+  }
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
     if (res.status === 401 && token) onUnauthorized();

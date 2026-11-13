@@ -1,12 +1,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import compression from 'compression';
 import cors from 'cors';
 import express from 'express';
 import { api } from './routes.js';
 
 export function createApp() {
   const app = express();
+  app.use(compression());
   app.use(cors());
   app.use(express.json({ limit: '100kb' }));
   app.use('/api', api);
